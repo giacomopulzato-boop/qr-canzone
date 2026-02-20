@@ -11,33 +11,48 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background-color: #000;
       color: #fff;
       font-family: Arial, sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
     }
     h1 {
       font-size: 2rem;
       text-align: center;
-      margin-bottom: 20px;
-    }
-    button {
-      font-size: 1.5rem;
-      padding: 15px 30px;
-      margin: 5px;
-      background-color: #1db954; /* colore Spotify-like */
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-    }
-    button:active {
-      transform: scale(0.98);
+      margin-bottom: 30px;
     }
     .controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+    }
+    button {
+      flex: 1 1 40%; /* pulsanti più grandi su mobile */
+      min-width: 100px;
+      font-size: 1.5rem;
+      padding: 15px;
+      background-color: #1db954; 
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+    @media (max-width: 400px) {
+      button {
+        flex: 1 1 100%;
+        font-size: 1.3rem;
+        padding: 12px;
+      }
     }
   </style>
 </head>
@@ -46,11 +61,11 @@
 <h1>Ai nuovi passi</h1>
 
 <div class="controls">
-  <button onclick="playAudio()">▶ PLAY</button>
-  <button onclick="pauseAudio()">❚❚ PAUSA</button>
-  <button onclick="stopAudio()">■ STOP</button>
-  <button onclick="rewindAudio()">⏪ REWIND</button>
-  <button onclick="forwardAudio()">⏩ FORWARD</button>
+  <button id="playBtn">▶ PLAY</button>
+  <button id="pauseBtn">❚❚ PAUSA</button>
+  <button id="stopBtn">■ STOP</button>
+  <button id="rewindBtn">⏪ REWIND</button>
+  <button id="forwardBtn">⏩ FORWARD</button>
 </div>
 
 <audio id="player">
@@ -61,30 +76,29 @@
 <script>
 const audio = document.getElementById('player');
 
-function playAudio() {
+document.getElementById('playBtn').addEventListener('click', () => {
   audio.play().catch(err => {
-    alert("Errore: non è stato possibile avviare la canzone. Controlla che 'canzone.mp3' sia nella cartella 'audio'.");
+    alert("Errore: non è stato possibile avviare la canzone. Controlla 'canzone.mp3' nella cartella 'audio'.");
   });
-}
+});
 
-function pauseAudio() {
+document.getElementById('pauseBtn').addEventListener('click', () => {
   audio.pause();
-}
+});
 
-function stopAudio() {
+document.getElementById('stopBtn').addEventListener('click', () => {
   audio.pause();
-  audio.currentTime = 0; // Riporta all'inizio
-}
+  audio.currentTime = 0;
+});
 
-function rewindAudio() {
-  audio.currentTime = Math.max(0, audio.currentTime - 10); // Torna indietro di 10 secondi
-}
+document.getElementById('rewindBtn').addEventListener('click', () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 10);
+});
 
-function forwardAudio() {
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10); // Avanza di 10 secondi
-}
+document.getElementById('forwardBtn').addEventListener('click', () => {
+  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+});
 </script>
 
 </body>
 </html>
-
