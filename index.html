@@ -22,8 +22,9 @@
       margin-bottom: 20px;
     }
     button {
-      font-size: 2rem;
-      padding: 20px 40px;
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      margin: 5px;
       background-color: #1db954; /* colore Spotify-like */
       border: none;
       border-radius: 10px;
@@ -33,14 +34,24 @@
     button:active {
       transform: scale(0.98);
     }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
 
 <h1>Ai nuovi passi</h1>
 
-<button onclick="playAudio()">▶ PLAY</button>
-<button onclick="playAudio()">❚❚ PAUSA</button>  
+<div class="controls">
+  <button onclick="playAudio()">▶ PLAY</button>
+  <button onclick="pauseAudio()">❚❚ PAUSA</button>
+  <button onclick="stopAudio()">■ STOP</button>
+  <button onclick="rewindAudio()">⏪ REWIND</button>
+  <button onclick="forwardAudio()">⏩ FORWARD</button>
+</div>
 
 <audio id="player">
   <source src="audio/canzone.mp3" type="audio/mpeg">
@@ -48,14 +59,32 @@
 </audio>
 
 <script>
+const audio = document.getElementById('player');
+
 function playAudio() {
-  const audio = document.getElementById('player');
   audio.play().catch(err => {
-    alert("Errore: non è stato possibile avviare la canzone. Assicurati che il file 'canzone.mp3' sia nella cartella 'audio'.");
+    alert("Errore: non è stato possibile avviare la canzone. Controlla che 'canzone.mp3' sia nella cartella 'audio'.");
   });
+}
+
+function pauseAudio() {
+  audio.pause();
+}
+
+function stopAudio() {
+  audio.pause();
+  audio.currentTime = 0; // Riporta all'inizio
+}
+
+function rewindAudio() {
+  audio.currentTime = Math.max(0, audio.currentTime - 10); // Torna indietro di 10 secondi
+}
+
+function forwardAudio() {
+  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10); // Avanza di 10 secondi
 }
 </script>
 
 </body>
-
 </html>
+
