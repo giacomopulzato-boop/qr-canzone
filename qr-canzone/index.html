@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ai nuovi passi</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      font-size: 2rem;
+      padding: 20px 40px;
+      background-color: #1db954; /* colore Spotify-like */
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+<h1>Ai nuovi passi</h1>
+
+<button onclick="playAudio()">▶ PLAY</button>
+
+<audio id="player">
+  <source src="audio/canzone.mp3" type="audio/mpeg">
+  Il tuo browser non supporta l’audio.
+</audio>
+
+<script>
+function playAudio() {
+  const audio = document.getElementById('player');
+  audio.play().catch(err => {
+    alert("Errore: non è stato possibile avviare la canzone. Assicurati che il file 'canzone.mp3' sia nella cartella 'audio'.");
+  });
+}
+</script>
+
+</body>
+</html>
